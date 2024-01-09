@@ -1,0 +1,42 @@
+version: "3.3"
+
+services:
+  api-rest-laravel:
+    build:
+      context: ./notes-app-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./notes-app-backend/.env
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - docker
+
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: notes-app
+      MYSQL_USER: matheus-docker
+      MYSQL_PASSWORD: k09R&ckO^-U~1.L6Lw-FMf~
+      MYSQL_ROOT_PASSWORD: k09R&ckO^-U~1.L6Lw-FMf~
+    volumes:
+      - .docker/dbdata:/var/lib/mysql
+    networks:
+      - docker
+
+  frontend-notes-app:
+    build:
+      context: ./notes-app-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+networks:
+  docker:
+    driver: bridge
