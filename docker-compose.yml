@@ -20,11 +20,8 @@ services:
     restart: always
     ports:
       - "3308:3306"
-    environment:
-      MYSQL_DATABASE: notes-app
-      MYSQL_USER: matheus-docker
-      MYSQL_PASSWORD: k09R&ckO^-U~1.L6Lw-FMf~
-      MYSQL_ROOT_PASSWORD: k09R&ckO^-U~1.L6Lw-FMf~
+    env_file:
+      - .env
     volumes:
       - .docker/dbdata:/var/lib/mysql
     networks:
